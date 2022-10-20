@@ -1,0 +1,147 @@
+@import "./fonts";
+
+@media screen and (max-width: 1280px) {
+    .game-table {
+        width:400px;
+        height:400px;
+    }
+
+    .filled-cell {
+        font-size: 200%;
+    }
+
+    .left-panel {
+        top:90px;  
+        padding:15px 10px 20px 10px;     
+
+        & label {
+            margin-top:55px;
+        }  
+    }
+
+    .right-panel {
+        top:90px;
+        padding:15px 10px 15px 10px;
+
+        & .btn {
+            padding-left:34px;
+            padding-right:34px;
+            margin-top:23px;
+        }
+
+        & label {
+            padding-right:20px;
+            margin-bottom:20px;
+            font-size:24px;
+
+            &::before {
+                top:-3px;
+            }
+        
+            &::after {
+                top:3px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .game-table {
+        width:300px;
+        height:300px;
+    }
+
+    .timer-container {
+        margin-top:20px;
+        width:300px;
+        display:flex;
+        font-size:20px;
+    }
+
+    .span-time {
+        width:80px;
+    }
+
+    .filled-cell {
+        font-size: 150%;
+    }
+
+    .left-panel {
+        position:absolute;
+        top:378px;
+        left:auto;
+        transform: translateX(-50%);
+        padding:15px 10px 15px 21px;
+        border-radius:0 0 0 10px;
+        border-right:2px solid rgb(228, 189, 118); 
+    
+        & label {
+            margin-top:23px;
+        }       
+    }
+
+    .btn {
+        margin-bottom:20px;
+        padding:5px;
+        font-size:20px;
+    }
+
+    label {
+        padding-left:5px;
+        font-size:22px;
+    
+        .checkbox+&::before {
+            left:75px;
+            top:-1px;
+            width:25px;
+            height:25px;
+        }
+    
+        .checkbox+&::after {
+            left:81px;
+            top:4.5px;
+            width:19px;
+            height:19px;
+            background-color:rgb(228, 189, 118);
+    
+        }
+    
+        .checkbox:checked+&::after {
+            display:block;
+        }
+    }
+
+    .right-panel {
+        position:absolute;
+        top:378px;
+        right:auto;
+        transform: translateX(50%);
+        padding:15px 24px 15px 10px;
+        border-radius:0 0 10px 0;
+        border-right:2px solid rgb(228, 189, 118);
+
+        & .btn {
+            padding-left:25px;
+            padding-right:25px;
+            margin-top:4px;
+        }
+
+        & label {
+            margin-bottom:14px;
+            font-size:20px;
+  
+            &::before {
+                left:10px;
+                top:-3px;
+                width:23px;
+                height:23px;
+            }
+        
+            &::after {
+                top:3px;
+                width:17px;
+                height:17px;
+            }
+        }
+    }
+}
