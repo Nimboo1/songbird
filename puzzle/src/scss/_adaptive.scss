@@ -62,21 +62,27 @@
         width:80px;
     }
 
+    .span-count {
+        width:80px;
+    }
+
     .filled-cell {
         font-size: 150%;
     }
 
     .left-panel {
+        box-sizing: border-box;
+        width:150px;
         position:absolute;
         top:378px;
         left:auto;
         transform: translateX(-50%);
-        padding:15px 10px 15px 21px;
+        padding:15px 10px 15px 12px;
         border-radius:0 0 0 10px;
         border-right:2px solid rgb(228, 189, 118); 
     
         & label {
-            margin-top:23px;
+            margin-top:19px;
         }       
     }
 
@@ -87,6 +93,7 @@
     }
 
     label {
+        margin-left:10px;
         padding-left:5px;
         font-size:22px;
     
@@ -112,11 +119,13 @@
     }
 
     .right-panel {
+        box-sizing: border-box;
+        width:150px;
         position:absolute;
         top:378px;
         right:auto;
         transform: translateX(50%);
-        padding:15px 24px 15px 10px;
+        padding:15px 12px 11px 10px;
         border-radius:0 0 10px 0;
         border-right:2px solid rgb(228, 189, 118);
 
@@ -143,5 +152,15 @@
                 height:17px;
             }
         }
+    }
+
+    .win-window {
+        width:200px;
+        font-size: 24px;
+    }
+
+    .score-window {
+        width:280px;
+        font-size: 24px;
     }
 }
