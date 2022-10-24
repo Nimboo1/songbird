@@ -9,7 +9,7 @@ let SIZE = 4;
 let stepCount = 0;
 let rebuild = false;
 let isPaused = false;
-let storageTable;
+let isRebuild = false;
 
 
 function tableInit() {
@@ -22,93 +22,200 @@ function tableInit() {
     } else {
         container = document.querySelector(".container");
     }
+
     //Создание таблицы
     let table = document.createElement("table");
     table.classList.add("game-table");
     table.setAttribute("draggable","false");
-    let tbody = document.createElement("tbody");
-    table.append(tbody);
-    container.prepend(table);
+    if (!localStorage.getItem("table")) {
+        let tbody = document.createElement("tbody");
+        table.append(tbody);
+        container.prepend(table);
 
-    //Рандомизация координат пустой ячейки
-    let emptyCellX = Math.floor(Math.random( ) * ((SIZE-1)+1));
-    let emptyCellY = Math.floor(Math.random( ) * ((SIZE-1)+1));
+        let emptyCellX, emptyCellY, randomArr;
+        if (SIZE != 3) {
+            //Рандомизация координат пустой ячейки
+            emptyCellX = Math.floor(Math.random( ) * ((SIZE-1)+1));
+            emptyCellY = Math.floor(Math.random( ) * ((SIZE-1)+1));
 
-
-    //Рандомизация чисел в ячейках
-    let randomArr;
-    while (true) {
-        randomArr = shuffleArr(SIZE);   
-        let pairCount = 0;
-        for (let i = 0; i < randomArr.length; i++) {
-            for (let j = i+1; j < randomArr.length; j++) {
-                if (randomArr[i] > randomArr[j]) pairCount++;
+            //Рандомизация чисел в ячейках
+            while (true) {
+                randomArr = shuffleArr(SIZE);   
+                let pairCount = 0;
+                for (let i = 0; i < randomArr.length; i++) {
+                    for (let j = i+1; j < randomArr.length; j++) {
+                        if (randomArr[i] > randomArr[j]) pairCount++;
+                    }
+                }
+                pairCount+=(emptyCellY+1);
+                if (SIZE%2 == 0) {
+                    if (pairCount%2 == 0) {
+                        break;
+                    }
+                } else {
+                    if (!(pairCount%2 == 0)) {
+                        break;
+                    }
+                }
             }
-        }
-        pairCount+=(emptyCellY+1);
-        if (SIZE%2 == 0) {
-            if (pairCount%2 == 0) {
-                console.log(pairCount);
-                break;
+
+            let count = 0;
+            //Создание ячеек
+            for (let i = 0; i < SIZE; i++) {
+                let tr = document.createElement("tr");
+                tbody.append(tr);
+                for (let j = 0; j < SIZE; j++) {
+                    let cell = document.createElement("td");
+                    if (i == emptyCellY && j == emptyCellX) {
+                        cell.classList.add("cell");
+                        cell.classList.add("empty-cell");
+                    } else {
+                        cell.classList.add("cell");
+                        cell.classList.add("filled-cell");
+                        cell.innerText = randomArr[count];
+                        count++;
+                    } 
+                    tr.append(cell);
+                }
             }
         } else {
-            if (!(pairCount%2 == 0)) {
-                console.log(pairCount);
-                break;
+            //Перемешивание для 3х3
+            randomArr = [[1,2,3],[4,5,6],[7,8,9]];
+            emptyCellX = 2;
+            emptyCellY = 2;
+            let shuffleCount = Math.floor(Math.random() * (35 - 25 + 1)) + 25;
+            console.log(shuffleCount);
+            let randomSide;
+            let temp;
+            for (let i = 0; i < shuffleCount; i++) {
+                let flag = true;
+                while (flag) {
+                    randomSide = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
+                    //1 - справа, 2 - слева, 3 - снизу, 4 - сверху
+                    switch (randomSide) {
+                        case 1: 
+                            if (randomArr[emptyCellY][emptyCellX+1]) {
+                                temp = randomArr[emptyCellY][emptyCellX+1];
+                                randomArr[emptyCellY][emptyCellX+1] = randomArr[emptyCellY][emptyCellX];
+                                randomArr[emptyCellY][emptyCellX] = temp;
+
+                                emptyCellX +=1;
+                                flag = false;
+                            } 
+                            break;
+                        case 2:
+                            if (randomArr[emptyCellY][emptyCellX-1]) {
+                                temp = randomArr[emptyCellY][emptyCellX-1];
+                                randomArr[emptyCellY][emptyCellX-1] = randomArr[emptyCellY][emptyCellX];
+                                randomArr[emptyCellY][emptyCellX] = temp;
+                                
+                                emptyCellX -=1;
+                                flag = false;
+                            } 
+                            break;
+                        case 3:
+                            if (randomArr[emptyCellY+1]) {
+                                temp = randomArr[emptyCellY+1][emptyCellX];
+                                randomArr[emptyCellY+1][emptyCellX] = randomArr[emptyCellY][emptyCellX];
+                                randomArr[emptyCellY][emptyCellX] = temp;
+                                
+                                emptyCellY +=1;
+                                flag = false;
+                            } 
+                            break;                            
+                        case 4:
+                            if (randomArr[emptyCellY-1]) {
+                                temp = randomArr[emptyCellY-1][emptyCellX];
+                                randomArr[emptyCellY-1][emptyCellX] = randomArr[emptyCellY][emptyCellX];
+                                randomArr[emptyCellY][emptyCellX] = temp;
+                                
+                                emptyCellY -=1;
+                                flag = false;
+                            } 
+                            break;
+                    }
+                }
+            }
+
+            //Создание ячеек
+            for (let i = 0; i < SIZE; i++) {
+                let tr = document.createElement("tr");
+                tbody.append(tr);
+                for (let j = 0; j < SIZE; j++) {
+                    let cell = document.createElement("td");
+                    if (randomArr[i][j] == 9) {
+                        cell.classList.add("cell");
+                        cell.classList.add("empty-cell");
+                    } else {
+                        cell.classList.add("cell");
+                        cell.classList.add("filled-cell");
+                        cell.innerText = randomArr[i][j];
+                    } 
+                    tr.append(cell);
+                }
             }
         }
-    }
-    let count = 0;
 
-    //Создание ячеек
-    for (let i = 0; i < SIZE; i++) {
-        let tr = document.createElement("tr");
-        tbody.append(tr);
-        for (let j = 0; j < SIZE; j++) {
-            let cell = document.createElement("td");
-            if (i == emptyCellY && j == emptyCellX) {
-                cell.classList.add("cell");
-                cell.classList.add("empty-cell");
-            } else {
-                cell.classList.add("cell");
-                cell.classList.add("filled-cell");
-                cell.innerText = randomArr[count];
-                count++;
-            } 
-            tr.append(cell);
-        }
-    }
+        //Нахождение ячеек для перемещения
+        setDraggable();
+    } else {
+        table.innerHTML = JSON.parse(localStorage.getItem("table"));
+        container.prepend(table);
 
-    //Нахождение ячеек для перемещения
-    setDraggable();
-    document.querySelectorAll(".cell").forEach(item => addEventListener("dragover", dragOver));
+        let draggables = document.querySelectorAll(".draggable");
+        draggables.forEach(item => {
+            item.addEventListener("dragstart", dragStart);
+            item.addEventListener("dragend", dragEnd);
+        });
+        let clickables = document.querySelectorAll(".clickable");
+            clickables.forEach(item => {
+            item.addEventListener("click", clickShift);
+        });
+    }
+   
+    Array.from(document.querySelectorAll(".cell")).forEach(item => item.addEventListener("dragover", dragOver));
+    document.querySelector(".empty-cell").addEventListener('dragover', (e) => {
+        e.preventDefault();
+    });;
 }
-
 
 //Создание таймера
 let timer;
 let intervalId;
 function timerInit() {
-    stepCount = 0;
-    timer = new Date(0);
-
+    let timeContainer;
     let timerContainer = document.createElement("div");
     timerContainer.classList.add("timer-container");
 
-    let stepContainer = document.createElement("span");
+    if (!localStorage.getItem("timer")) {
+        stepCount = 0;
+        timer = new Date(0);
 
-    stepContainer.classList.add("span-count");
-    stepContainer.innerText = "Moves: " + stepCount;
-    timerContainer.append(stepContainer); 
+        let stepContainer = document.createElement("span");
 
-    let timeContainer = document.createElement("span");
-    timeContainer.classList.add("span-time");
-    timeContainer.innerText = "Time: " + 
-    ((timer.getMinutes() < 10) ? "0" + timer.getMinutes() : timer.getMinutes()) + ":" + 
-    ((timer.getSeconds() < 10) ? "0" + timer.getSeconds() : timer.getSeconds());
-    timerContainer.append(timeContainer); 
+        stepContainer.classList.add("span-count");
+        stepContainer.innerText = "Moves: " + stepCount;
+        timerContainer.append(stepContainer); 
 
-    document.querySelector(".container").prepend(timerContainer);
+        timeContainer = document.createElement("span");
+        timeContainer.classList.add("span-time");
+        timeContainer.innerText = "Time: " + 
+        ((timer.getMinutes() < 10) ? "0" + timer.getMinutes() : timer.getMinutes()) + ":" + 
+        ((timer.getSeconds() < 10) ? "0" + timer.getSeconds() : timer.getSeconds());
+        timerContainer.append(timeContainer); 
+        document.querySelector(".container").prepend(timerContainer);  
+
+    } else {
+        stepCount = JSON.parse(localStorage.getItem("count"));
+        timer = new Date(0);
+        timer.setSeconds(JSON.parse(localStorage.getItem("seconds")));
+        timer.setMinutes(JSON.parse(localStorage.getItem("minutes")));
+
+        timerContainer.innerHTML = JSON.parse(localStorage.getItem("timer")); 
+        document.querySelector(".container").prepend(timerContainer);  
+        timeContainer = document.querySelector(".span-time");
+    }
+ 
 
     intervalId = setInterval(() => {
         if (!isPaused) {
@@ -191,7 +298,6 @@ function soundInit() {
     sound.volume = 0.05;
     document.body.append(sound);
 }
-
 
 //Создание левой боковой панели
 function leftPanelInit() {
@@ -409,16 +515,22 @@ function clickShift() {
 
 //Начало движения
 function dragStart() {
-    if (!dragFlag) return;
+    console.log("зашло старт");
     clickFlag = false;
     this.classList.add("dragstart");
 };
 
 //Конец движения
 function dragEnd() {
-    if (!dragFlag) return;
+    console.log("зашло энд");
+    console.log(dragOverElem);
+    if (!dragOverElem) {
+        this.classList.remove("dragstart");
+        return;
+    }
     //Если над пустой ячейкой - меняем их местами
-    if (dragOverElem.classList.contains("empty-cell")){
+    if (dragOverElem.classList.contains("empty-cell")) {
+        console.log(dragOverElem);
         let temp;
         let emptyCell = document.querySelector(".empty-cell");
         if (this.previousElementSibling) {
@@ -464,7 +576,7 @@ function dragEnd() {
 //Движение над элементом
 let dragOverElem;
 function dragOver(e) {
-    if (!dragFlag) return;
+    console.log(dragOverElem);
     dragOverElem = e.target;
 }
 
@@ -508,8 +620,11 @@ function isWin() {
     }
 }
 
+
 //Перестройка таблицы
 function rebuildFunc() {
+    clearSave();
+
     if (isPaused) {
         pause();
     }
@@ -544,6 +659,30 @@ function pause() {
     
 }
 
+function save() {
+    //Сохранение таймера
+    let timerContainer = document.querySelector(".timer-container");
+    localStorage.setItem("timer", JSON.stringify(timerContainer.innerHTML));
+    localStorage.setItem("seconds", JSON.stringify(timer.getSeconds()));
+    localStorage.setItem("minutes", JSON.stringify(timer.getMinutes()));
+    localStorage.setItem("count", JSON.stringify(stepCount));
+
+    //Сохранение таблицы
+    let table = document.querySelector(".game-table");
+    localStorage.setItem("table", JSON.stringify(table.innerHTML));
+}
+
+    //Очистить сохранение
+function clearSave() {
+    //Таймер
+    localStorage.removeItem("timer");
+    localStorage.removeItem("seconds");
+    localStorage.removeItem("minutes");
+    localStorage.removeItem("count");
+
+    localStorage.removeItem("table");
+}
+
 
 
 
@@ -567,11 +706,14 @@ pauseBtn.addEventListener("click", pause);
 let boardBtn = document.querySelector(".btn-board");
 boardBtn.addEventListener("click", scoreShow);
 
+let saveBtn = document.querySelector(".btn-save");
+saveBtn.addEventListener("click", save);
+
 let winContainer = document.querySelector(".win-container");
 winContainer.addEventListener("click", modalClose);
 
 
-localStorage.clear();
+//localStorage.clear();
 if (!localStorage.score) {
     localStorage.setItem("score", JSON.stringify([]));
 }
