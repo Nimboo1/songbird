@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SongBird</title>
+</head>
+<body>
+    <!-- header_dark-->
+    <header class="header">
+        <div class="container">
+            <div class="header__wrapper">
+                <div class="header__logo">
+                    <h1 class="header__title">
+                        <a class="header__link" href="index.html">SongBird</a>
+                        <a class="header__img-link" href="index.html">
+                            <img class="header__img" src="assets/logo.png" alt="bird">
+                        </a>
+                    </h1>
+                </div>
+                <nav class="nav">
+                    <button class="nav__item">Викторина</button>
+                    <button class="nav__item">Галерея</button>
+                    <p class="quiz-footer__score">Счёт: 0</p>
+                </nav>
+                <div class="lang">
+                    <p class="lang__item lang__item_active">RU</p>
+                    <p class="lang__item">EN</p>
+                </div>
+            </div>  
+        </div>
+    </header>
+    <main class="main">
+        <!--intro_hidden-->
+        <article class="intro"> 
+            <div class="video">
+                <video src="assets/Birds_09___4K_res.mp4" class="video__media" autoplay muted loop></video>
+            </div> 
+            <div class="container">
+                <div class="intro__content">
+                    <div class="intro__content-desc">
+                        <h2 class="intro__content-title">Что такое SongBird?</h2>
+                        <p class="intro__content-text">
+                            Это - приложение-викторина для распознавания птиц по их голосам. <br>
+                            Правила: <br>
+                            1) Если вы ответили правильно с 1 попытки - получаете 5 баллов <br>
+                            2) Каждая неправильная попытка вычитает 1 балл <br>
+                            3) Баллы за все вопросы суммируются <br>
+                        </p>
+                    </div>
+                    <button class="intro__button">Начать</button>
+                </div>
+            </div> 
+        </article>
+        <!--quiz_hidden-->
+        <article class="quiz quiz_hidden">
+            <div class="container">
+                <div class="quiz__category">
+                    <span class="quiz__category-name quiz__category-name_active">Разминка</span>
+                    <span class="quiz__category-name">Воробьиные</span>
+                    <span class="quiz__category-name">Лесные птицы</span>
+                    <span class="quiz__category-name">Певчие птицы</span>
+                    <span class="quiz__category-name">Хищные птицы</span>
+                    <span class="quiz__category-name">Морские птицы</span>
+                </div>
+                <div class="bird-quiz">
+                    <div class="bird-quiz__img-block">
+                        <img src="assets/logo.png" alt="Bird" class="bird-quiz__img">
+                    </div>
+                    <div class="bird-quiz__content">
+                        <p class="quiz__title">Птица 1</p>
+                        <audio class="audio" src="#" hidden preload="auto"></audio>
+                        <div class="audio__container">
+                            <div class="audio__button">
+                                <svg viewBox="-200 0 1200 1000">
+                                    <path fill="rgb(32, 51, 87)" d="M96.51 11.97c-31.23 8.05-53.26 32.76-63.42 71.27-3.45 12.84-3.64 29.7-3.64 416.71s.19 403.87 3.64 416.71c16.09 60.74 61.69 86.03 120.9 67.25 9-2.87 53.65-25.1 116.49-58.24 56.14-29.51 221.29-116.3 367.28-192.93 145.99-76.64 271.29-143.31 278.38-148.1 39.28-25.68 59.59-63.04 53.26-97.52-4.79-26.63-24.33-53.07-52.88-71.65C892 399.37 172.58 22.32 154.95 16.38c-18.97-6.33-43.3-8.24-58.44-4.41z"></path>
+                                </svg>
+                            </div>
+                            <div class="timebar">
+                                <input type="range" class="audio__timebar audio-timebar" min="0" max="100" step="1" value="0">
+                                <div class="audio__time">
+                                    <div>00:00</div>
+                                    <div>00:00</div>
+                                </div>
+                            </div>
+                            <div class="timebar volume">
+                                <input type="range" class="audio__timebar" min="0" max="100" step="1" value="50">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="answer-block">
+                    <div class="answer-block__answers">
+                        <!--answer-block__item_true-->
+                        <span class="answer-block__item">Первый</span>
+                        <span class="answer-block__item">Второй</span>
+                        <span class="answer-block__item">Третий</span>
+                        <span class="answer-block__item">Четвертый</span>
+                        <span class="answer-block__item">Пятый</span>
+                        <span class="answer-block__item">Шестой</span>
+                        <audio src="assets/win.mp3" class="win-sound" preload="auto"></audio>
+                        <audio src="assets/lose.mp3" class="lose-sound" preload="auto"></audio>
+                    </div>
+                    <div class="selected-bird">
+                        <div class="selected-bird__wrapper">
+                            <div class="selected-bird__img-block">
+                                <img src="assets/logo.png" alt="Bird" class="selected-bird__img">
+                            </div>
+                            <div class="selected-bird__content selected-bird__content_hidden">
+                                <p class="quiz__title">Птица 1</p>
+                                <p class="quiz__title selected-bird__subtitle">Птица 1</p>
+                                <audio class="audio selected-bird__audio" src="#"></audio>
+                                <div class="audio__container">
+                                    <div class="audio__button">
+                                        <svg viewBox="-200 0 1200 1000">
+                                            <path fill="rgb(32, 51, 87)" d="M96.51 11.97c-31.23 8.05-53.26 32.76-63.42 71.27-3.45 12.84-3.64 29.7-3.64 416.71s.19 403.87 3.64 416.71c16.09 60.74 61.69 86.03 120.9 67.25 9-2.87 53.65-25.1 116.49-58.24 56.14-29.51 221.29-116.3 367.28-192.93 145.99-76.64 271.29-143.31 278.38-148.1 39.28-25.68 59.59-63.04 53.26-97.52-4.79-26.63-24.33-53.07-52.88-71.65C892 399.37 172.58 22.32 154.95 16.38c-18.97-6.33-43.3-8.24-58.44-4.41z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="timebar">
+                                        <input type="range" class="audio__timebar audio-timebar" min="0" max="100" step="1" value="0">
+                                        <div class="audio__time">
+                                            <div>00:00</div>
+                                            <div>00:00</div>
+                                        </div>
+                                    </div>
+                                    <div class="timebar volume">
+                                        <input type="range" class="audio__timebar" min="0" max="100" step="1" value="50">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="selected-bird__info">  
+                            Прослушайте плеер и выберете птицу.
+                        </p>
+                    </div>
+                </div>
+                <div class="quiz-footer">
+                    <button class="quiz-footer__button quiz-footer__button_unactive">Следующий уровень</button>
+                </div>
+            </div>
+        </article>
+        <article class="win win_hidden">
+            <div class="container">
+                <div class="win__wrapper">
+                    <h2 class="win__title">Поздравляем!</h2>
+                    <p class="win__text">Вы прошли викторину</p>
+                    <button class="win__button">Попробовать еще раз</button>
+                </div>
+            </div>
+        </article>
+        <article class="gallery gallery_hidden">
+            <div class="container">
+                <div class="gallery__wrapper">
+                    <button class="gallery__button left">
+                        <img src="assets/arrow.png" alt="arrow" class="gallery__button-left">
+                    </button>
+                    <button class="gallery__button right">
+                        <img src="assets/arrow.png" alt="arrow" class="gallery__button-right">
+                    </button>
+                    <div class="selected-bird gallery__block">
+                        <div class="selected-bird__wrapper">
+                            <div class="selected-bird__img-block">
+                                <img src="assets/logo.png" alt="Bird" class="selected-bird__img">
+                            </div>
+                            <div class="selected-bird__content">
+                                <p class="quiz__title">Птица 1</p>
+                                <p class="quiz__title selected-bird__subtitle">Птица 1</p>
+                                <audio class="audio gallery__audio" src="#"></audio>
+                                <div class="audio__container">
+                                    <div class="audio__button">
+                                        <svg viewBox="-200 0 1200 1000">
+                                            <path fill="rgb(32, 51, 87)" d="M96.51 11.97c-31.23 8.05-53.26 32.76-63.42 71.27-3.45 12.84-3.64 29.7-3.64 416.71s.19 403.87 3.64 416.71c16.09 60.74 61.69 86.03 120.9 67.25 9-2.87 53.65-25.1 116.49-58.24 56.14-29.51 221.29-116.3 367.28-192.93 145.99-76.64 271.29-143.31 278.38-148.1 39.28-25.68 59.59-63.04 53.26-97.52-4.79-26.63-24.33-53.07-52.88-71.65C892 399.37 172.58 22.32 154.95 16.38c-18.97-6.33-43.3-8.24-58.44-4.41z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="timebar">
+                                        <input type="range" class="audio__timebar audio-timebar" min="0" max="100" step="1" value="0">
+                                        <div class="audio__time">
+                                            <div>00:00</div>
+                                            <div>00:00</div>
+                                        </div>
+                                    </div>
+                                    <div class="timebar volume">
+                                        <input type="range" class="audio__timebar" min="0" max="100" step="1" value="50">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="selected-bird__info">  
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </main>
+    <!-- footer_hidden-->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__nav">
+                <a href="https://rs.school/js/" class="footer__nav-link">
+                    <img src="assets/rs_school.svg" alt="RS" class="footer__nav-link-img">
+                </a>
+                <a href="https://github.com/Nimboo1" class="footer__nav-link">GH</a>
+                <span class="footer__nav-link">2022</span>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
