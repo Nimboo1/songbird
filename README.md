@@ -1,2 +1,2 @@
-# nimboo1-JSFE2022Q3
-Private repository for @nimboo1
+# Songbird quiz for RSS vanilla-js
+deploy https://melodious-kringle-57a3af.netlify.app
